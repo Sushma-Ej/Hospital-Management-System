@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Create Prescription</title>
+    <style>
+      body {
+        background-color: rgba(0, 0, 255, 0.3);
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url("https://wallpaperaccess.com/full/4113320.jpg");
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        background-color: transparent;
+        min-height: 100vh;
+        padding-top: 20px;
+      }
+
+      h1 {
+        color: #4b0082;
+        font-size: 3em;
+        margin-top: 0px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      hr {
+        width: 80%;
+        border: 1px solid #4b0082;
+        margin: 10px auto;
+      }
+
+      a {
+        font-size: 1.2em;
+        color: #0066cc;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+        margin: 10px 0;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .homepage-link {
+        text-align: left;
+        width: 100%;
+        margin-left: 20px;
+      }
+
+      table {
+        width: 80%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        color: #333;
+        font-size: 16px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      th,
+      td {
+        padding: 12px 20px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #ffc93c;
+        color: white;
+        font-size: 18px;
+      }
+
+      td {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+      }
+
+      caption {
+        font-size: 1.8em;
+        color: #4b0082;
+        margin-bottom: 10px;
+      }
+
+      @media (max-width: 768px) {
+        table {
+          width: 100%;
+        }
+
+        th,
+        td {
+          font-size: 14px;
+          padding: 10px;
+        }
+
+        h1 {
+          font-size: 2.5em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>OneHealth</h1>
+
+    <div class="homepage-link">
+      <a th:href="@{/patients}">Go back to Homepage</a>
+    </div>
+
+    <table>
+      <caption>
+        Prescription Details
+      </caption>
+      <tr>
+        <th>Appointment ID</th>
+        <th>Patient Name</th>
+        <th>Prescription</th>
+      </tr>
+      <tr th:each="prescription : ${prescriptions}">
+        <td th:text="${prescription.appointmentID}"></td>
+        <td th:text="${prescription.patientName}"></td>
+        <td th:text="${prescription.description}"></td>
+      </tr>
+    </table>
+  </body>
+</html>

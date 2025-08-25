@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Patient Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      :root {
+        --primary-blue: #007bff; /* A vibrant blue for accents */
+        --dark-blue: #16213e; /* Darker blue for backgrounds and main sections */
+        --lighter-dark-blue: #1a1a2e; /* Slightly lighter dark blue for subtle variations */
+        --text-light: #e0e0e0; /* Light grey for primary text on dark backgrounds */
+        --text-dark: #333; /* Dark grey for text on light backgrounds (if any) */
+        --accent-blue: #4a90e2; /* A brighter blue for interactive elements */
+        --gradient-start: #16213e; /* Start color for gradients */
+        --gradient-end: #0f3460; /* End color for gradients */
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+        color: var(--text-light);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        overflow-x: hidden;
+      }
+
+      .main-header {
+        width: 100%;
+        background-color: var(--dark-blue);
+        padding: 20px 5%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+        position: relative;
+      }
+
+      .logo {
+        color: var(--accent-blue);
+        font-size: 2.5em;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      }
+
+      .nav-links a {
+        color: var(--text-light);
+        text-decoration: none;
+        margin-left: 30px;
+        font-size: 1.1em;
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary-blue);
+        transform: translateY(-2px);
+      }
+
+      .nav-link-button {
+        background: linear-gradient(90deg, #dc3545 0%, #e85d04 100%);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1em;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+      }
+
+      .nav-link-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+        opacity: 0.9;
+      }
+
+      .content-area {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+        background-color: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 40px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        text-align: center;
+      }
+
+      .greeting {
+        font-size: 2.2em;
+        color: var(--primary-blue);
+        font-weight: 600;
+        margin-bottom: 20px;
+        animation: fadeIn 1s ease-out;
+      }
+
+      .action-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        width: 100%;
+        margin-top: 30px;
+      }
+
+      .quote-section {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-left: 5px solid var(--accent-blue);
+        padding: 20px 30px;
+        margin: 20px 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 100%;
+        max-width: 800px;
+        animation: fadeIn 1s ease-out forwards;
+        animation-delay: 0.8s;
+      }
+
+      .quote-text {
+        font-size: 1.4em;
+        font-style: italic;
+        color: var(--text-light);
+        margin-bottom: 10px;
+        line-height: 1.5;
+      }
+
+      .quote-author {
+        font-size: 1em;
+        font-weight: 600;
+        color: var(--primary-blue);
+      }
+
+      .card {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+        text-align: left;
+      }
+
+      .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+        transform: translateX(-100%);
+        transition: transform 0.5s ease-out;
+      }
+
+      .card:hover::before {
+        transform: translateX(0%);
+      }
+
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(0, 123, 255, 0.3);
+      }
+
+      .card h3 {
+        color: var(--accent-blue);
+        font-size: 1.8em;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      .card h3 i {
+        margin-right: 15px;
+        font-size: 1.2em;
+        color: var(--primary-blue);
+      }
+
+      .card p {
+        color: var(--text-light);
+        line-height: 1.6;
+        font-size: 1em;
+        margin-bottom: 20px;
+      }
+
+      .card .action-button {
+        display: inline-block;
+        background: linear-gradient(90deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+        color: #fff;
+        padding: 12px 25px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+      }
+
+      .card .action-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+      }
+
+      footer {
+        margin-top: 50px;
+        padding: 25px;
+        background-color: var(--dark-blue);
+        width: 100%;
+        text-align: center;
+        color: var(--text-light);
+        box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .content-area > * {
+        animation: fadeIn 0.8s ease-out forwards;
+        opacity: 0;
+      }
+
+      .content-area > *:nth-child(1) { animation-delay: 0.2s; }
+      .content-area > *:nth-child(2) { animation-delay: 0.4s; }
+      .content-area > *:nth-child(3) { animation-delay: 0.6s; }
+
+      @media (max-width: 768px) {
+        .main-header {
+          flex-direction: column;
+          padding: 15px 5%;
+        }
+        .logo {
+          font-size: 2em;
+          margin-bottom: 15px;
+        }
+        .nav-links a {
+          margin: 0 10px;
+          font-size: 1em;
+        }
+        .nav-link-button {
+          font-size: 1em;
+          padding: 8px 15px;
+        }
+        .content-area {
+          padding: 25px;
+          margin: 20px auto;
+        }
+        .greeting {
+          font-size: 1.8em;
+        }
+        .action-cards {
+          grid-template-columns: 1fr;
+        }
+        .card h3 {
+          font-size: 1.6em;
+        }
+        .card p {
+          font-size: 0.9em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="main-header">
+        <div class="logo">OneHealth Hospital</div>
+        <nav class="nav-links">
+            <a th:href="@{/main}">Home</a>
+            <a th:href="@{/doctors}">Dashboard</a>
+            <form action="#" th:action="@{/logout}" style="display: inline;">
+                <input type="submit" value="Logout" class="nav-link-button"/>
+        </form>
+        </nav>
+    </header>
+
+    <div class="content-area">
+        <h2 class="greeting">Welcome, DR. <span th:text="${username}">Doctor</span>!</h2>
+
+        <div class="quote-section">
+            <p class="quote-text">"The art of medicine consists of amusing the patient while nature cures the disease."</p>
+            <p class="quote-author">- Voltaire</p>
+    </div>
+
+        <div class="action-cards">
+            <div class="card">
+                <h3><i class="fas fa-user-md"></i> Your Appointments</h3>
+                <p>View all your scheduled appointments with patients.</p>
+                <a th:href="@{/doctors/doctorAppointments}" class="action-button">View Appointments</a>
+      </div>
+            <div class="card">
+                <h3><i class="fas fa-calendar-alt"></i> Your Schedule</h3>
+                <p>Manage and view your weekly and daily schedule.</p>
+                <a th:href="@{/doctors/schedule}" class="action-button">View Schedule</a>
+      </div>
+      </div>
+    </div>
+
+    <footer>
+        &copy; 2025 OneHealth Hospital | All rights reserved.
+    </footer>
+  </body>
+</html>

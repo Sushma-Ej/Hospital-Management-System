@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Create Prescription</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      :root {
+        --primary-blue: #007bff;
+        --dark-blue: #16213e;
+        --lighter-dark-blue: #1a1a2e;
+        --text-light: #e0e0e0;
+        --text-dark: #333;
+        --accent-blue: #4a90e2;
+        --gradient-start: #16213e;
+        --gradient-end: #0f3460;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+        color: var(--text-light);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        overflow-x: hidden;
+      }
+
+      .main-header {
+        width: 100%;
+        background-color: var(--dark-blue);
+        padding: 20px 5%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+        position: relative;
+      }
+
+      .logo {
+        color: var(--accent-blue);
+        font-size: 2.5em;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      }
+
+      .nav-links a {
+        color: var(--text-light);
+        text-decoration: none;
+        margin-left: 30px;
+        font-size: 1.1em;
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary-blue);
+        transform: translateY(-2px);
+      }
+
+      .nav-link-button {
+        background: linear-gradient(90deg, #dc3545 0%, #e85d04 100%);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1em;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+      }
+
+      .nav-link-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+        opacity: 0.9;
+      }
+
+      .content-area {
+        width: 90%;
+        max-width: 900px;
+        margin: 40px auto;
+        background-color: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 40px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        text-align: center;
+      }
+
+      h1 {
+        color: var(--primary-blue);
+        font-size: 2.8em;
+        margin-bottom: 30px;
+        font-weight: 700;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      caption {
+        font-size: 1.8em;
+        color: var(--text-light);
+        font-weight: 600;
+        padding: 15px 0;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      th {
+        background-color: var(--dark-blue);
+        color: var(--accent-blue);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.03);
+      }
+
+      tr:hover {
+        background-color: rgba(0, 123, 255, 0.2);
+        transition: background-color 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        .main-header {
+          flex-direction: column;
+          padding: 15px 5%;
+        }
+        .logo {
+          font-size: 2em;
+          margin-bottom: 15px;
+        }
+        .nav-links a {
+          margin: 0 10px;
+          font-size: 1em;
+        }
+        .nav-link-button {
+          font-size: 1em;
+          padding: 8px 15px;
+        }
+        .content-area {
+          padding: 25px;
+          margin: 20px auto;
+        }
+        h1 {
+          font-size: 2.2em;
+        }
+        th, td {
+          padding: 10px;
+          font-size: 0.9em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="logo">OneHealth Hospital</div>
+      <nav class="nav-links">
+        <a th:href="@{/main}">Home</a>
+        <a th:href="@{/patients}">Dashboard</a>
+        <form action="#" th:action="@{/logout}" style="display: inline;">
+          <input type="submit" value="Logout" class="nav-link-button"/>
+        </form>
+      </nav>
+    </header>
+
+    <div class="content-area">
+      <h1>Prescription Details</h1>
+
+      <table>
+        <caption>Prescription Details</caption>
+        <thead>
+          <tr>
+            <th>Appointment ID</th>
+            <th>Doctor Name</th>
+            <th>Prescription</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="prescription : ${prescriptions}">
+            <td th:text="${prescription.appointmentID}"></td>
+            <td th:text="${prescription.doctorName}"></td>
+            <td><div style="white-space: pre-wrap;" th:text="${prescription.description}"></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

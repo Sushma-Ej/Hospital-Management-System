@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>OneHealth - Healthcare Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+            --primary-blue: #007bff;
+            --dark-blue: #16213e;
+            --lighter-dark-blue: #1a1a2e;
+            --text-light: #e0e0e0;
+            --text-dark: #333;
+            --accent-blue: #4a90e2;
+      }
+
+      body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--lighter-dark-blue);
+            color: var(--text-light);
+            min-height: 100vh;
+        display: flex;
+            flex-direction: column;
+            justify-content: center;
+        align-items: center;
+            background: linear-gradient(135deg, var(--lighter-dark-blue) 0%, var(--dark-blue) 100%);
+        }
+
+        .header {
+            background-color: var(--dark-blue);
+            padding: 20px 0;
+        width: 100%;
+        text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: var(--accent-blue);
+        font-size: 3em;
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+        }
+
+        .hero-section {
+            background-color: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .hero-section h2 {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-size: 2em;
+        }
+
+        .hero-section p {
+            color: var(--text-light);
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .container h2 {
+            color: var(--text-light);
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+
+        .auth-buttons {
+            display: flex;
+          flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .auth-buttons a {
+            display: block;
+            padding: 15px 25px;
+            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .auth-buttons a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+            opacity: 0.9;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+            .hero-section h2 {
+                font-size: 1.5em;
+            }
+            .hero-section p {
+                font-size: 1em;
+            }
+            .container {
+                padding: 30px;
+            }
+            .container h2 {
+                font-size: 1.5em;
+            }
+            .auth-buttons a {
+                font-size: 1em;
+                padding: 12px 20px;
+            }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+        <h1>Welcome to Hospital Management System</h1>
+    </div>
+
+    <div class="hero-section">
+        <h2>Your Health, Our Priority.</h2>
+        <p>Providing compassionate care with cutting-edge technology.</p>
+    </div>
+
+    <div class="container">
+        <h2>Please select your role to login:</h2>
+        <div class="auth-buttons">
+            <a th:href="@{/login}">Patient Login</a>
+            <a th:href="@{/login}">Doctor Login</a>
+            <a th:href="@{/login}">Receptionist Login</a>
+            <a th:href="@{/signup}">Sign Up</a>
+        </div>
+      </div>
+  </body>
+</html>

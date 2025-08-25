@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Your Appointments</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-image: url("https://tse2.mm.bing.net/th?id=OIP.4LMbVN8dMVOwDX5wkjRqpgHaE8&pid=Api&P=0&h=180"); /* Replace with your image URL */
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        font-family: "Arial", sans-serif;
+        color: #333;
+        min-height: 100vh;
+        padding-top: 130px;
+      }
+
+      .top-bar {
+        background-color: white;
+        width: 100%;
+        height: 130px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .top-bar img {
+        height: 100px;
+        width: 180px;
+      }
+
+      a {
+        color: #009688;
+        text-decoration: none;
+        font-size: 18px;
+        margin: 0 15px;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      h1 {
+        color: #009688;
+        margin-bottom: 20px;
+        font-size: 40px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      table {
+        width: 90%;
+        margin: 30px auto;
+        border-collapse: collapse;
+        font-size: 16px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #009688;
+        color: white;
+      }
+
+      td {
+        background-color: #f9f9f9;
+      }
+
+      tr:nth-child(even) td {
+        background-color: #f1f1f1;
+      }
+
+      .alert {
+        padding: 15px;
+        background-color: #f44336;
+        color: white;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .prescription-link {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+
+      .prescription-link:hover {
+        background-color: #45a049;
+      }
+
+      .no-appointments {
+        font-size: 20px;
+        color: #f44336;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      @media (max-width: 768px) {
+        table {
+          font-size: 14px;
+        }
+
+        h1 {
+          font-size: 30px;
+        }
+
+        a {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-bar">
+      <!-- Logo on the left -->
+      <img th:src="@{/images/Onehealth.png}" alt="OneHealth Logo" />
+
+      <a th:href="@{/doctors}">Homepage</a>
+    </div>
+
+    <h1>Upcoming Appointments</h1>
+
+    <div th:if="${doctorAppointments == null}" class="no-appointments">
+      No appointments found.
+    </div>
+
+    <h3 align="center">
+      <div
+        th:if="${message}"
+        th:text="${message}"
+        th:class="${'alert ' + alertClass}"
+      ></div>
+    </h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Appointment ID</th>
+          <th>Patient Name</th>
+          <th>Appointment Date</th>
+          <th>Prescription</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="appointment : ${doctorAppointments}">
+          <td th:text="${appointment.appointment_id}"></td>
+          <td th:text="${appointment.patientName}"></td>
+          <td th:text="${appointment.date}"></td>
+          <td>
+            <span th:if="${appointment.prescription == 'yes'}">
+              <a th:href="@{/nikita}" class="prescription-link"
+                >Create Prescription</a
+              >
+            </span>
+            <span th:unless="${appointment.prescription == 'yes'}">-</span>
+            <span th:if="${appointment.prescription == 'prescribed'}"
+              >Prescribed</span
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Your appointments</title>
+    <style>
+      body {
+        background-color: powderblue;
+        font-family: Arial, sans-serif;
+        margin: 0;
+      }
+
+      .header-strip {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        padding: 10px 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #007bff;
+      }
+
+      .nav-link {
+        font-size: 18px;
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .nav-link:hover {
+        text-decoration: underline;
+      }
+
+      table {
+        width: 90%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        border-radius: 10px;
+      }
+
+      caption {
+        font-size: 28px;
+        color: #007bff;
+        font-weight: bold;
+        padding: 10px 0;
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: center;
+        font-size: 18px;
+      }
+
+      th {
+        background-color: #007bff;
+        color: white;
+        text-transform: uppercase;
+        font-weight: bold;
+        border-radius: 10px 10px 0 0;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover {
+        background-color: #e2e2e2;
+      }
+
+      input[type="submit"] {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #218838;
+      }
+
+      span {
+        color: green;
+        font-weight: bold;
+        font-size: 18px;
+      }
+      .header-strip img {
+        height: 100px;
+        width: 180px;
+        padding-left: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header-strip">
+      <img th:src="@{/images/Onehealth.png}" alt="OneHealth Logo" />
+      <a th:href="@{/receptionist}" class="nav-link">Go back to homepage</a>
+    </div>
+
+    <br />
+
+    <h3 align="center">
+      <div
+        th:if="${message}"
+        th:text="${message}"
+        th:class="${'alert ' + alertClass}"
+      ></div>
+    </h3>
+
+    <table>
+      <caption>
+        Booked Appointments
+      </caption>
+      <thead>
+        <tr>
+          <th>Appointment ID</th>
+          <th>Patient Name</th>
+          <th>Doctor Name</th>
+          <th>Appointment Date</th>
+          <th>Confirmation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="appointment : ${listAppointments}">
+          <td th:text="${appointment.appointment_id}"></td>
+          <td th:text="${appointment.patientName}"></td>
+          <td th:text="${appointment.doctorName}"></td>
+          <td th:text="${appointment.date}"></td>
+          <td>
+            <div th:if="${appointment.confirmed != 'confirmed'}">
+              <form action="#" th:action="@{/confirmm}">
+                <input type="submit" value="Click to confirm" />
+              </form>
+            </div>
+            <span th:if="${appointment.confirmed == 'confirmed'}"
+              >Confirmed</span
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

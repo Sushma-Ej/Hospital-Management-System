@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Patient Profile</title>
+    <style>
+      body {
+        background-image: url("https://tse4.mm.bing.net/th?id=OIP.BG5W1Nvhq3YXBzc3tlqT8QHaCx&pid=Api&P=0&h=180");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        font-family: "Arial", sans-serif;
+        color: #ffffff;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        position: relative;
+        background-color: transparent;
+        background-blend-mode: overlay;
+        overflow-x: hidden;
+      }
+
+      .cont {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 200px;
+        background-color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        z-index: 10;
+      }
+
+      .logo {
+        width: 140px;
+        height: 120px;
+      }
+
+      .top-right-links {
+        display: flex;
+        gap: 15px;
+        margin-top: -80px;
+        margin-right: 80px;
+        align-items: center;
+        height: 42px;
+      }
+
+      a,
+      input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #0092ca;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 18px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+      }
+
+      a:hover,
+      input[type="submit"]:hover {
+        background-color: #93deff;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #4caf50;
+      }
+
+      .welcome-text {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        color: #fff;
+        font-weight: 400;
+      }
+
+      .dropdown-container {
+        margin-top: -310px;
+        margin-left: 600px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 46%;
+        box-sizing: border-box;
+        z-index: 20;
+        color: black;
+        font-style: Arial Black;
+        position: fixed;
+      }
+      .dropdown select {
+        padding: 10px;
+        font-size: 16px;
+        margin: 10px 0;
+        width: 100%;
+        border: 2px solid #24527a;
+        background-color: #0092ca;
+        color: white;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+      .dropdown select:hover {
+        background-color: #93deff;
+        border-color: #24527a;
+      }
+
+      .dropdown select option {
+        background-color: white;
+        color: #333;
+      }
+
+      .dropdown select option:hover {
+        background-color: #f0f8ff;
+        color: #4caf50;
+      }
+
+      .dropdown {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 30%;
+      }
+      .cont img {
+        height: 100px;
+        width: 180px;
+        padding-left: 0px;
+      }
+      select {
+        padding: 10px;
+        font-size: 16px;
+        margin: 10px 0;
+        width: 100%;
+      }
+
+      input[type="submit"] {
+        padding: 12px 30px;
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 0;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #e60000;
+      }
+      .container {
+        margin-top: 2250px;
+      }
+      .welcome {
+        height: 150px;
+        width: 100%;
+        text-align: center;
+        margin-top: 80px;
+        background-color: #79c2d0;
+      }
+
+      .welcome {
+        height: 300px;
+        padding-top: 70px;
+        width: 100vw;
+        text-align: center;
+        margin-top: 80px;
+        background-color: rgb(85, 133, 181, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cont">
+      <img th:src="@{/images/Onehealth.png}" alt="OneHealth Logo" />
+
+      <div class="top-right-links">
+        <a th:href="@{doctors/doctorAppointments}">Appointments</a>
+        <!-- Logout Button (Now aligned with the links) -->
+        <form action="#" th:action="@{/logout}">
+          <input type="submit" value="Logout" />
+        </form>
+      </div>
+    </div>
+
+    <div class="dropdown-container">
+      <div class="dropdown">
+        <label for="hospitals" th:attr="style='font-weight: bold;'"
+          >Our Hospitals</label
+        >
+
+        <select id="hospitals" name="hospitals">
+          <option value="hospital1">OneHealth, Delhi</option>
+          <option value="hospital">OneHealth, Jaipur</option>
+          <option value="hospital1">OneHealth, Lucknow</option>
+          <option value="hospital4">OneHealth, Haridwar</option>
+        </select>
+      </div>
+
+      <div class="dropdown">
+        <label for="corporate">Corporate</label>
+        <select id="corporate" name="corporate">
+          <option value="corporate1">Board of Directors</option>
+          <option value="corporate1">Investors Relations</option>
+          <option value="corporate3">Management Team</option>
+          <option value="corporate4">Corporate 4</option>
+        </select>
+      </div>
+
+      <div class="dropdown">
+        <label for="services">Our Services</label>
+        <select id="services" name="services">
+          <option value="service1">Medical and Diagnostic Equipment</option>
+          <option value="service2">Health and Wellness Services</option>
+          <option value="service3">Technology and IT Support</option>
+          <option value="service4">Financial and Compensation Services</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="welcome">
+        <h1>Doctor's Workspace</h1>
+
+        Hello, DR: <span th:text="${username}"></span>
+      </div>
+    </div>
+    <div class="container2">
+      <h2>Our Hospitals</h2>
+
+      <p>
+        At OneHealth, we are committed to providing the highest quality
+        healthcare across our network of hospitals. Our facilities are equipped
+        with state-of-the-art technology, world-class medical professionals, and
+        a patient-first approach that ensures comprehensive care for all
+        individuals.
+      </p>
+
+      <div id="hospital1" class="hospital">
+        <h3>1. OneHealth, Delhi</h3>
+        <p>
+          Located in the heart of Delhi, OneHealth Delhi offers a wide range of
+          healthcare services, including specialized medical treatments,
+          surgeries, diagnostics, and emergency care. Our doctors and healthcare
+          staff are dedicated to delivering exceptional care to every patient.
+        </p>
+        <ul>
+          <li>
+            Multi-specialty services including cardiology, orthopedics, and
+            pediatrics.
+          </li>
+          <li>24/7 emergency and trauma care.</li>
+          <li>
+            Advanced diagnostic facilities with the latest medical equipment.
+          </li>
+          <li>Personalized care and support for patients.</li>
+        </ul>
+      </div>
+
+      <div class="hospital">
+        <h3>2. OneHealth, Jaipur</h3>
+        <p>
+          Situated in Jaipur, our hospital is known for its excellent healthcare
+          services, providing compassionate care in a variety of specialties. We
+          offer the best possible medical treatment with a focus on patient
+          comfort and convenience.
+        </p>
+        <ul>
+          <li>Modern infrastructure with patient-centric amenities.</li>
+          <li>Specialties in gynecology, dermatology, and neurology.</li>
+          <li>Experienced team of surgeons and medical professionals.</li>
+          <li>Comprehensive outpatient and inpatient services.</li>
+        </ul>
+      </div>
+
+      <div class="hospital">
+        <h3>3. OneHealth, Lucknow</h3>
+        <p>
+          OneHealth Lucknow is one of the leading healthcare providers in the
+          region, offering top-tier medical care in a wide range of fields. Our
+          hospital is focused on treating patients with care and expertise,
+          providing holistic solutions for their health needs.
+        </p>
+        <ul>
+          <li>
+            Renowned for our expertise in cancer treatment and rehabilitation.
+          </li>
+          <li>Fully equipped intensive care unit (ICU).</li>
+          <li>Advanced laboratory and imaging services.</li>
+          <li>Pioneering health programs for preventive care.</li>
+        </ul>
+      </div>
+
+      <div class="hospital">
+        <h3>4. OneHealth, Haridwar</h3>
+        <p>
+          Our hospital in Haridwar provides exceptional healthcare services,
+          especially focusing on wellness and preventive care. Our team is
+          dedicated to supporting the health needs of the community, offering
+          both specialized treatments and routine care.
+        </p>
+        <ul>
+          <li>
+            Specialties in Ayurveda and traditional medicine alongside modern
+            treatments.
+          </li>
+          <li>Wellness programs promoting health and lifestyle changes.</li>
+          <li>Comprehensive health check-up packages.</li>
+          <li>
+            Skilled staff providing high-quality care with a compassionate
+            touch.
+          </li>
+        </ul>
+      </div>
+
+      <h3>Why Choose OneHealth Hospitals?</h3>
+      <ul>
+        <li>
+          <strong>Expert Healthcare Professionals:</strong> Our hospitals are
+          staffed with a team of highly qualified doctors, nurses, and medical
+          staff.
+        </li>
+        <li>
+          <strong>State-of-the-Art Facilities:</strong> We invest in the latest
+          medical technology and equipment to ensure the best possible care.
+        </li>
+        <li>
+          <strong>Patient-Centric Approach:</strong> We treat our patients with
+          empathy and ensure they receive personalized care.
+        </li>
+        <li>
+          <strong>Comprehensive Care:</strong> From diagnostics to recovery, we
+          offer complete healthcare solutions for every need.
+        </li>
+      </ul>
+
+      <p>
+        Explore our hospitals and take the first step towards better health with
+        OneHealth.
+      </p>
+      <div id="corporate1" class="containerone">
+        <h1>Corporate</h1>
+
+        <p>
+          The corporate division at OneHealth is dedicated to ensuring that all
+          strategic and operational aspects of the business align with our
+          mission of delivering high-quality healthcare. The corporate team
+          focuses on governance, managing relationships with stakeholders, and
+          ensuring transparency in all aspects of business operations. This
+          section is crucial for maintaining the integrity and success of the
+          company.
+        </p>
+
+        <h2>Board of Directors</h2>
+        <p class="description">
+          The <strong>Board of Directors</strong> at OneHealth is responsible
+          for overseeing the strategic direction of the company. Comprised of
+          experienced professionals with diverse backgrounds, the Board ensures
+          that OneHealth remains focused on its mission of providing exceptional
+          healthcare while maximizing shareholder value. They play a pivotal
+          role in shaping major decisions related to the company's growth,
+          compliance, and sustainability, offering expert guidance on corporate
+          governance and long-term objectives.
+        </p>
+
+        <h2>Investor Relations</h2>
+        <p class="description">
+          OneHealth maintains a dedicated
+          <strong>Investor Relations</strong> team to facilitate open and
+          transparent communication with its investors. This team ensures that
+          all stakeholders, including individual and institutional investors,
+          receive timely and accurate information regarding the company's
+          performance, financial results, and strategic initiatives. Investor
+          Relations works to build trust and confidence in OneHealth, providing
+          updates on financial reports, major business developments, and
+          potential investment opportunities.
+        </p>
+
+        <h2>Management Team</h2>
+        <p class="description">
+          The <strong>Management Team</strong> at OneHealth is responsible for
+          the day-to-day operations of the company. Led by the CEO, this team
+          oversees various departments including operations, finance, marketing,
+          and human resources. The management team implements the strategies set
+          by the Board of Directors and works closely with each department to
+          drive the company's objectives forward. They are committed to
+          fostering a culture of innovation, excellence, and accountability to
+          ensure OneHealth remains a leader in the healthcare industry.
+        </p>
+      </div>
+      <div class="containerfour">
+        <h1>Our Services</h1>
+
+        <p>
+          At OneHealth, we offer a wide range of services designed to address
+          the diverse healthcare needs of our patients. Our services focus on
+          the latest medical technology, wellness programs, technological
+          support, and financial solutions to ensure comprehensive and seamless
+          care for every patient. Below are the key areas in which we excel:
+        </p>
+
+        <h2>Medical and Diagnostic Equipment</h2>
+        <p class="description">
+          At OneHealth, we invest in the latest
+          <strong>Medical and Diagnostic Equipment</strong> to provide accurate
+          and timely diagnoses for our patients. Our advanced diagnostic tools
+          allow our healthcare professionals to offer personalized treatments,
+          monitor patient conditions closely, and ensure the highest level of
+          medical care. From imaging equipment like MRIs and X-rays to
+          laboratory testing equipment, our facilities are equipped to deliver
+          the best diagnostic results.
+        </p>
+
+        <h2>Health and Wellness Services</h2>
+        <p class="description">
+          OneHealth offers a range of
+          <strong>Health and Wellness Services</strong> aimed at promoting
+          overall health and preventing diseases. We provide personalized
+          wellness programs that include nutrition counseling, fitness plans,
+          stress management, and preventive healthcare services. Our goal is to
+          help individuals maintain a healthy lifestyle through preventive care,
+          lifestyle changes, and regular health check-ups, ensuring optimal
+          well-being for all.
+        </p>
+
+        <h2>Technology and IT Support</h2>
+        <p class="description">
+          Our <strong>Technology and IT Support</strong> services are designed
+          to enhance the efficiency and effectiveness of our healthcare systems.
+          We implement state-of-the-art IT infrastructure that ensures smooth
+          patient data management, telemedicine capabilities, and efficient
+          hospital operations. Our IT team works diligently to ensure that all
+          technological systems are secure, user-friendly, and integrated for
+          the best healthcare experience.
+        </p>
+
+        <h2>Financial and Compensation Services</h2>
+        <p class="description">
+          OneHealth offers
+          <strong>Financial and Compensation Services</strong> to ensure that
+          patients have access to affordable healthcare. We provide financial
+          counseling, assistance with insurance claims, and compensation support
+          for medical procedures. Our financial services team helps guide
+          patients through complex medical billing, insurance processes, and
+          offers flexible payment plans to ensure that cost does not become a
+          barrier to receiving care.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

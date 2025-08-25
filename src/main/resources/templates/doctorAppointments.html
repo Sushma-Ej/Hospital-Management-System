@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Your Appointments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      :root {
+        --primary-dark-blue: #0a1128;
+        --secondary-blue: #001f40;
+        --accent-blue: #034078;
+        --light-blue: #0070e0;
+        --text-light: #e0e0e0;
+        --text-dark: #cccccc;
+        --success-green: #28a745;
+        --danger-red: #dc3545;
+        --gradient-bg: linear-gradient(135deg, var(--primary-dark-blue) 0%, var(--secondary-blue) 100%);
+        --card-bg: rgba(0, 0, 0, 0.2);
+        --input-bg: rgba(255, 255, 255, 0.08);
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: var(--gradient-bg);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-light);
+        line-height: 1.6;
+      }
+
+      .main-header {
+        width: 100%;
+        background-color: var(--primary-dark-blue);
+        padding: 15px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+      }
+
+      .main-header .logo {
+        font-size: 1.8em;
+        font-weight: 700;
+        color: var(--light-blue);
+        letter-spacing: 0.5px;
+      }
+
+      .main-header .nav-links a {
+        color: var(--text-light);
+        text-decoration: none;
+        margin-left: 30px;
+        font-weight: 500;
+        font-size: 1.05em;
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .main-header .nav-links a:hover {
+        color: var(--light-blue);
+        transform: translateY(-3px);
+      }
+
+      .logout-button {
+        background-color: var(--danger-red);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .logout-button:hover {
+        background-color: #c82333;
+        transform: scale(1.05);
+      }
+
+      .content-area {
+        width: 90%;
+        max-width: 1200px;
+        background-color: var(--card-bg);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        margin-top: 100px; /* Adjust based on header height */
+        margin-bottom: 30px;
+        animation: fadeIn 1s ease-out forwards;
+      }
+
+      h1 {
+        color: var(--light-blue);
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.8em;
+        font-weight: 700;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+        background-color: var(--secondary-blue);
+        border-radius: 10px;
+        overflow: hidden; /* Ensures rounded corners apply to table */
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      th {
+        background-color: var(--accent-blue);
+        color: var(--text-light);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9em;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+
+      .prescription-link {
+        background: linear-gradient(90deg, var(--success-green) 0%, #218838 100%);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .prescription-link:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 4px 10px rgba(40, 167, 69, 0.4);
+      }
+
+      .no-appointments {
+        font-size: 1.2em;
+        color: var(--text-light);
+        text-align: center;
+        margin-top: 30px;
+        padding: 20px;
+        background-color: var(--card-bg);
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-align: center;
+        opacity: 0.9;
+      }
+      .alert-success {
+        background-color: #28a745;
+        color: white;
+      }
+      .alert-danger {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .main-header {
+          flex-direction: column;
+          padding: 15px 20px;
+        }
+        .main-header .nav-links {
+          margin-top: 15px;
+        }
+        .main-header .nav-links a {
+          margin: 0 10px;
+        }
+        .content-area {
+          padding: 20px;
+          margin-top: 150px;
+        }
+        h1 {
+          font-size: 2em;
+        }
+        th, td {
+          padding: 10px;
+          font-size: 0.85em;
+        }
+        .prescription-link {
+          padding: 6px 12px;
+          font-size: 0.9em;
+        }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="logo">OneHealth Hospital</div>
+      <nav class="nav-links">
+        <a th:href="@{/doctors}">Dashboard</a>
+        <a th:href="@{/main}" class="logout-button">Logout</a>
+      </nav>
+    </header>
+
+    <div class="content-area">
+      <h1>Upcoming Appointments</h1>
+
+      <div th:if="${doctorAppointments == null or doctorAppointments.isEmpty()}" class="no-appointments">
+        No appointments found.
+      </div>
+
+      <div
+        th:if="${message}"
+        th:text="${message}"
+        th:classappend="${'alert ' + alertClass}"
+        class="alert"
+      ></div>
+
+      <table th:unless="${doctorAppointments == null or doctorAppointments.isEmpty()}">
+        <thead>
+          <tr>
+            <th>Appointment ID</th>
+            <th>Patient Name</th>
+            <th>Disease</th>
+            <th>Appointment Date</th>
+            <th>Prescription</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="appointment : ${doctorAppointments}">
+            <td th:text="${appointment.appointment_id}"></td>
+            <td th:text="${appointment.patientName}"></td>
+            <td th:text="${appointment.disease}"></td>
+            <td th:text="${appointment.date.toString()}"></td>
+            <td>
+              <span th:if="${appointment.confirmed == 'prescribed'}">Prescribed</span>
+              <span th:unless="${appointment.confirmed == 'prescribed'}">
+                <a th:href="@{/doctors/createPrescription(appointmentId=${appointment.appointment_id})}" class="prescription-link">Create Prescription</a>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

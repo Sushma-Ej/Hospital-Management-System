@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Create Prescription</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      :root {
+        --primary-dark-blue: #0a1128;
+        --secondary-blue: #001f40;
+        --accent-blue: #034078;
+        --light-blue: #0070e0;
+        --text-light: #e0e0e0;
+        --text-dark: #cccccc;
+        --success-green: #28a745;
+        --danger-red: #dc3545;
+        --gradient-bg: linear-gradient(135deg, var(--primary-dark-blue) 0%, var(--secondary-blue) 100%);
+        --card-bg: rgba(0, 0, 0, 0.2);
+        --input-bg: rgba(255, 255, 255, 0.08);
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: var(--gradient-bg);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-light);
+        line-height: 1.6;
+      }
+
+      .main-header {
+        width: 100%;
+        background-color: var(--primary-dark-blue);
+        padding: 15px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+      }
+
+      .main-header .logo {
+        font-size: 1.8em;
+        font-weight: 700;
+        color: var(--light-blue);
+        letter-spacing: 0.5px;
+      }
+
+      .main-header .nav-links a {
+        color: var(--text-light);
+        text-decoration: none;
+        margin-left: 30px;
+        font-weight: 500;
+        font-size: 1.05em;
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+
+      .main-header .nav-links a:hover {
+        color: var(--light-blue);
+        transform: translateY(-3px);
+      }
+
+      .logout-button {
+        background-color: var(--danger-red);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .logout-button:hover {
+        background-color: #c82333;
+        transform: scale(1.05);
+      }
+
+      .content-area {
+        width: 90%;
+        max-width: 800px;
+        background-color: var(--card-bg);
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        margin-top: 100px;
+        margin-bottom: 30px;
+        animation: fadeIn 1s ease-out forwards;
+        text-align: center;
+      }
+
+      h1 {
+        color: var(--light-blue);
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.8em;
+        font-weight: 700;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--text-light);
+        font-size: 1.1em;
+      }
+
+      .form-group input[type="text"],
+      .form-group textarea {
+        width: calc(100% - 24px); /* Account for padding */
+        padding: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        background-color: var(--input-bg);
+        color: var(--text-light);
+        font-size: 1em;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .form-group textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      .form-group input[type="text"]:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--light-blue);
+        box-shadow: 0 0 0 3px rgba(0, 112, 224, 0.3);
+      }
+
+      .form-group input[type="text"]::placeholder,
+      .form-group textarea::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      button[type="submit"] {
+        background: linear-gradient(90deg, var(--success-green) 0%, #218838 100%);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.2em;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        margin-top: 20px;
+      }
+
+      button[type="submit"]:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        opacity: 0.9;
+      }
+
+      .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-align: center;
+        opacity: 0.9;
+      }
+      .alert-success {
+        background-color: #28a745;
+        color: white;
+      }
+      .alert-danger {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .main-header {
+          flex-direction: column;
+          padding: 15px 20px;
+        }
+        .main-header .nav-links {
+          margin-top: 15px;
+        }
+        .main-header .nav-links a {
+          margin: 0 10px;
+        }
+        .content-area {
+          padding: 20px;
+          margin-top: 100px;
+        }
+        h1 {
+          font-size: 2em;
+        }
+        .form-group label {
+          font-size: 1em;
+        }
+        .form-group input[type="text"],
+        .form-group textarea {
+          padding: 10px;
+        }
+        button[type="submit"] {
+          font-size: 1.1em;
+          padding: 10px 20px;
+        }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="logo">OneHealth Hospital</div>
+      <nav class="nav-links">
+        <a th:href="@{/doctors}">Dashboard</a>
+        <a th:href="@{/main}" class="logout-button">Logout</a>
+      </nav>
+    </header>
+
+    <div class="content-area">
+      <h1>Create Prescription</h1>
+
+      <div th:if="${message}" th:text="${message}" th:classappend="${'alert ' + alertClass}" class="alert"></div>
+
+      <form action="/doctors/savePrescription" method="post" th:action="@{/doctors/savePrescription}">
+        <input type="hidden" name="appointmentId" th:value="${appointmentId}" />
+
+        <div class="form-group">
+          <label for="prescriptionText">Prescription Details:</label>
+          <textarea id="prescriptionText" name="prescriptionText" placeholder="Enter prescription details..." required></textarea>
+        </div>
+
+        <button type="submit"><i class="fas fa-save"></i> Save Prescription</button>
+      </form>
+    </div>
+  </body>
+</html>

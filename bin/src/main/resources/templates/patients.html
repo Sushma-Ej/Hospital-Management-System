@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Profile</title>
+    <style>
+		body {
+			
+		    
+			background-position: center;
+			    font-family: 'Arial', sans-serif;
+			    margin: 0;
+			    padding: 0;
+			    display: flex;
+			    flex-direction: column;
+			    align-items: center;
+			    justify-content: flex-start;
+			    min-height: 100vh;
+			    position: relative;
+			    background-size: cover;
+			    background-image: url('https://img.freepik.com/free-photo/medium-shot-scientists-posing-together_23-2148969982.jpg?uid=R186884714&ga=GA1.1.1086405533.1739257829&semt=ais_hybrid');
+	
+		}
+		.container1 {
+		            width: 100vw;
+		            padding: 20px;
+		            background-color: white;
+		            border-radius: 10px;
+		            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+					height: 18vh;
+		        }
+
+        h1 {
+            color: black;
+            font-size: 2.5em;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        hr {
+            width: 80%;
+            border: 1px solid #333;
+            margin: 10px auto;
+        }
+
+      
+        .carousel-container {
+            margin-top: 100px;
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px 0;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .carousel-images {
+            width: 100%;
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-images img {
+            width: 100%;
+            object-fit: cover;
+            height: 300px;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .prev, .next {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+      
+        .greeting {
+            font-size: 2em;
+            color: #333;
+            margin-top: 20px;
+			font-weight: bold;
+        }
+		h1 {
+		    font-size: 4em;
+		    font-weight: bold;
+		    color: #fff;
+		    background: linear-gradient(45deg, #00bcd4, #8e24aa);
+		    -webkit-background-clip: text;
+		    background-clip: text;
+		    text-align: center;
+		    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+		    margin-top: 40px;
+		   
+		}
+
+		@keyframes textAnimation {
+		    0% {
+		        transform: scale(1);
+		        opacity: 0.8;
+		    }
+		    50% {
+		        transform: scale(1.1);
+		        opacity: 1;
+		    }
+		    100% {
+		        transform: scale(1);
+		        opacity: 0.8;
+		    }
+		}
+
+      
+        .box-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px; 
+            margin-top: 30px;
+            padding: 0 20px;
+            width: 100%;
+            max-width: 900px; 
+	
+        }
+
+        .box {
+            background-color: #00204a;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+            width: 400px;
+            height: 80px;
+            padding-top: 44px;
+            font-size: 28px;
+        }
+
+        .box:hover {
+            background-color: #66bfbf;
+            transform: scale(1.05);
+        }
+		.ad {
+		    display: flex;            
+		    align-items: center;        
+		    margin-bottom: 10px;       
+		}
+
+		.ad p {
+		    margin: 0 10px;           
+		    display: flex;
+		    align-items: center;     
+		}
+
+		.ad img {
+		    margin-right: 10px;         
+		    width: 24px;            
+		    height: 24px;            
+		}
+
+
+        
+		footer {
+		    width: 100%;
+		    background-color: #333;
+		    color: white;
+		    text-align: center;
+		    padding: 10px;
+			margin-top: 28px;
+		}
+
+
+     
+        #logoutForm {
+            position: absolute;
+            top: 20px; 
+            right: 20px; 
+            margin: 0;
+        }
+
+        #logoutForm input {
+            padding: 10px 20px;
+            background-color: #00204a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+		.greeting span {
+		    text-decoration: none;
+		}
+.hi{
+	font-weight:bold;
+	font-size:42px;
+	color:black;
+	text-decoration:underline;
+text-decoration-color:#dc2f2f;
+font-style:Marker Felt, fantasy;
+margin-right: 680px;
+}
+
+        #logoutForm input:hover {
+            background-color: #66bfbf;
+        }
+		.video-container {
+		            width: 100vw;
+		          height: 50vh;
+		            margin-top: 30px;
+		        
+		            text-align: center;
+		        }
+
+	.na {
+	    margin-top: 1px;
+
+	    padding: 20px;
+	    color: white;  
+		width:100vw;
+		height:490px;
+		background-color: rgba(83, 168, 182, 0.6);
+		margin-bottom: -25px;
+	}
+	.na p {
+		padding-left:60px;
+		color:black;
+		
+	}
+	.na button {
+		margin-left:230px;
+		background-color:#dc2f2f;
+		margin-left: 230px;
+		           background-color: #dc2f2f;
+		           color: white;
+		           padding: 12px 20px;
+		           font-size: 16px;
+		           border: none;
+		           border-radius: 5px;
+		           display: flex;
+		           align-items: center;
+		           cursor: pointer;
+		           transition: background-color 0.3s ease;
+				   border-radius:6%;
+	}
+
+	.na button img {
+	    width: 16px; 
+	    height: 16px; 
+	    margin-right: 8px; 
+	}
+.greeting {
+text-align:center;
+}
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%; 
+}
+
+.box-container {
+    display: grid;
+    grid-template-columns: repeat(4, 2fr); 
+    gap: -2px;
+    padding: 0 10px;
+    width: 100%;
+    max-width: 900px;
+    position: absolute;
+    bottom: 0;
+    left: 0; 
+	
+}
+
+   
+        @media screen and (max-width: 768px) {
+            .box-container {
+                grid-template-columns: 1fr; 
+            }
+        }
+		body {
+		    overflow-x: hidden; 
+		}
+
+	
+		.box-container {
+	
+		    display: grid;
+		    grid-template-columns: repeat(4, 1fr);
+		    gap: 0px;
+		    padding: 0 25px;
+		    width: 100%;
+		    max-width: 100%; 
+		    position: absolute;
+			margin-top:30px;
+		    bottom: 0;
+		    left: 0;
+		}
+
+
+		.box {
+		    background-color: #00204a;
+		    color: white;
+		    padding: 15px; 
+		    border-radius: 10px;
+			
+		    text-align: center;
+		    transition: background-color 0.3s ease, transform 0.3s ease;
+		    cursor: pointer;
+		    width: 180px; 
+		    height: 80px;
+		    padding-top: 24px; 
+		    font-size: 25px; 
+			padding-top:30px;
+		}
+		.ad img {
+		    margin-right: 10px;         
+		    width: 32px;                
+		    height: 32px;              
+		    vertical-align: middle;     
+		}
+		@media screen and (max-width: 768px) {
+		    .box-container {
+		        grid-template-columns: 1fr;
+		    }
+		    
+		    .box {
+		        width: 100%; 
+		        height: auto; 
+		    }
+		}
+		
+		#logoutForm {
+		    position: fixed;  
+		    top: 20px;
+		    right: 20px;
+		    margin: 0;
+		    z-index: 1000; 
+		}
+
+		#logoutForm input {
+		    padding: 10px 20px;
+		    background-color: #00204a;
+		    color: white;
+		    border: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    font-size: 16px;
+		}
+
+		#logoutForm input:hover {
+		    background-color: #66bfbf;
+		}
+		
+
+
+    </style>
+</head>
+<body>
+	<div class="container1">
+	    <div class="ad">
+	        <p><img src="https://cdn-icons-png.flaticon.com/128/833/833602.png" alt="Working Hours Icon"/>MON-FRI: 08:00AM - 20:00PM</p>
+		<br/>
+	        <p>Saturday and Sunday - CLOSED</p>
+	    </div>
+	    <div class="ad">
+	        <p><img src="https://cdn-icons-png.flaticon.com/128/0/191.png" alt="Phone Icon"/>+0800 2466 7921</p>
+			<br/>
+	        <p>Contact Us For Help</p>
+		
+	    </div>
+	    <div class="ad">
+	        <p><img src="https://cdn-icons-png.flaticon.com/128/535/535239.png" alt="Location Icon"/>Shanthi nagar, Ramapuram</p>
+			<br/>
+	        <p>Chennai, Tamil Nadu</p>
+	    </div>
+	</div>
+
+		</div>
+    <div class="na">
+        <h1 class="hi">Meet The <br/>Best Experts!</h1>
+		
+		<p>Everyday is a new opportunity for you to do something for your health.</p>
+	<button><img src="https://cdn-icons-png.flaticon.com/128/3737/3737372.png"/>Purchase</button>
+	<div class="greeting">
+		Hello, <span th:text="${username}">User</span>
+	   </div>
+	
+    </div>
+
+    <!-- Custom Image Carousel 
+    <div class="carousel-container">
+        <div class="carousel-images">
+            <img src="images/hospital.jpeg" alt="Hospital Image 1">
+            <img src="images/hospital4.jpeg" alt="Hospital Image 2">
+            <img src="images/hospital5.jpeg" alt="Hospital Image 3">
+        </div>
+        <div class="carousel-nav">
+            <span class="prev">&#10094;</span>
+            <span class="next">&#10095;</span>
+        </div>
+    </div>-->
+
+    <!-- Greeting Below the Images -->
+
+   
+	<!---->
+	<!--<div class="video-container">
+	<video width="800" height="450" controls>
+	           <source src="C:\Users\Nikita Saxena\Downloads\8fc964b1b199e2f9505b3825212e8fe4_harkesh_attachment_HospitalManagementSystem\HospitalManagementSystem\src\main\resources\static\images\vecteezy_doctor-explaining-report-to-patient-in-the-hospital_41396193.mp4" type="video/mp4">
+	           Your browser does not support the video tag.
+	       </video>
+		   </div>-->
+
+    <!-- Options Below Greeting -->
+    <div class="container">
+        <!-- Logout Form -->
+		<form action=# th:action="@{/logout}" id="logoutForm" >
+		<input type="submit" value="logout">
+		</form>
+
+        
+		
+        <!-- Box Container for Links -->
+        <div class="box-container">
+            <div class="box">
+                <a href="/patients/myAppointments" style="text-decoration: none; color: white;">View Appointments</a>
+            </div>
+            <div class="box">
+                <a href="/patients/viewPrescription" style="text-decoration: none; color: white;">View Prescriptions</a>
+            </div>
+            <div class="box">
+                <a href="/patients/cancelAppointment" style="text-decoration: none; color: white;">Cancel Appointment</a>
+            </div>
+            <div class="box">
+                <a href="/add" style="text-decoration: none; color: white;">Book Appointment</a>
+            </div>
+        </div>
+
+        <!-- Message Alert Section -->
+        <div id="message" class="message-alert"></div>
+    </div>
+	
+
+
+    <footer>
+        &copy; 2025 Hospital OneHealth | All rights reserved.
+    </footer>
+
+   
+</body>
+</html>

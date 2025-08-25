@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>OneHealth - Healthcare Management System</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-gradient: linear-gradient(135deg, #2b84ea 0%, #1565c0 100%);
+        --secondary-gradient: linear-gradient(135deg, #27ae60 0%, #219a52 100%);
+        --emergency-gradient: linear-gradient(135deg, #e53935 0%, #c62828 100%);
+        --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #1a2a3a 100%);
+        --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --primary-color: #2c3e50;
+        --secondary-color: #3498db;
+        --accent-color: #e74c3c;
+        --text-color: #2c3e50;
+        --light-bg: #f8f9fa;
+        --white: #ffffff;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: #f8fafc;
+        overflow-x: hidden;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+      }
+
+      /* Header Styles */
+      .header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      /* Logo Styles */
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        text-decoration: none;
+        transition: var(--transition-smooth);
+      }
+
+      .brand:hover {
+        transform: scale(1.02);
+      }
+
+      .brand img {
+        height: 80px;
+        width: auto;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+      }
+
+      .brand-name {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Auth Button Styles */
+      .auth-buttons {
+        display: flex;
+        gap: 15px;
+      }
+
+      .auth-btn {
+        padding: 12px 25px;
+        border-radius: 30px;
+        border: none;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        transition: var(--transition-smooth);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .auth-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(-100%) rotate(45deg);
+        transition: transform 0.6s;
+        z-index: -1;
+      }
+
+      .auth-btn:hover::before {
+        transform: translateX(100%) rotate(45deg);
+      }
+
+      .auth-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .patient-login {
+        background: var(--primary-gradient);
+      }
+      .doctor-login {
+        background: var(--secondary-gradient);
+      }
+      .staff-login {
+        background: var(--dark-gradient);
+      }
+      .signup-btn {
+        background: white;
+        color: #2b84ea;
+        border: 2px solid #2b84ea;
+      }
+
+      /* Navigation Styles */
+      .nav-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 5%;
+      }
+
+      .contact-info {
+        font-size: 16px;
+        font-weight: 500;
+        color: #2b84ea;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        background: rgba(43, 132, 234, 0.1);
+        transition: var(--transition-smooth);
+      }
+
+      .contact-info:hover {
+        background: rgba(43, 132, 234, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+      }
+
+      .nav-link {
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 16px;
+        padding: 8px 15px;
+        border-radius: 20px;
+        transition: var(--transition-smooth);
+        position: relative;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--primary-gradient);
+        transform: scaleX(0);
+        transition: var(--transition-smooth);
+      }
+
+      .nav-link:hover::after {
+        transform: scaleX(1);
+      }
+
+      .emergency-btn {
+        background: var(--emergency-gradient);
+        color: white;
+        padding: 12px 30px;
+        border-radius: 30px;
+        border: none;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: var(--transition-smooth);
+        box-shadow: 0 4px 15px rgba(229, 57, 53, 0.3);
+        animation: pulse 2s infinite;
+      }
+
+      /* Hero Section Styles */
+      .hero {
+        margin-top: 140px;
+        background: var(--primary-gradient);
+        padding: 80px 5%;
+        border-radius: 30px;
+        margin: 140px 5% 40px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(43, 132, 234, 0.2);
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+        opacity: 0.3;
+        animation: backgroundMove 20s linear infinite;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .hero h1 {
+        font-size: 4em;
+        margin-bottom: 20px;
+        animation: fadeInUp 1s ease;
+      }
+
+      .hero p {
+        font-size: 1.8em;
+        opacity: 0;
+        animation: fadeInUp 1s ease 0.3s forwards;
+      }
+
+      /* Features Section Styles */
+      .features {
+        padding: 40px 5%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .feature-card {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: var(--card-shadow);
+        transition: var(--transition-smooth);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--primary-gradient);
+        transform: scaleX(0);
+        transition: var(--transition-smooth);
+      }
+
+      .feature-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .feature-icon {
+        font-size: 3em;
+        margin-bottom: 20px;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Specialties Section Styles */
+      .specialties-section {
+        padding: 80px 5%;
+        background: #f8fafc;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .section-header h2 {
+        font-size: 2.5em;
+        color: #2c3e50;
+        margin-bottom: 15px;
+      }
+
+      .section-header p {
+        color: #666;
+        font-size: 1.2em;
+      }
+
+      .specialties-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      .specialty-card {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: var(--card-shadow);
+        transition: var(--transition-smooth);
+      }
+
+      .specialty-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .specialty-icon {
+        font-size: 2.5em;
+        color: #2b84ea;
+        margin-bottom: 20px;
+      }
+
+      .specialty-card h3 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+      }
+
+      .specialty-card ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .specialty-card ul li {
+        padding: 8px 0;
+        color: #666;
+        border-bottom: 1px solid #eee;
+      }
+
+      /* Patient Info Section Styles */
+      .patient-info-section {
+        padding: 80px 5%;
+        background: #fff;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+      }
+
+      .info-card {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: var(--card-shadow);
+        transition: var(--transition-smooth);
+      }
+
+      .info-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .info-card i {
+        font-size: 2.5em;
+        color: #2b84ea;
+        margin-bottom: 20px;
+      }
+
+      .info-card h3 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+      }
+
+      .info-card p {
+        color: #666;
+        margin-bottom: 20px;
+      }
+
+      .info-btn {
+        display: inline-block;
+        padding: 10px 25px;
+        background: var(--primary-gradient);
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: var(--transition-smooth);
+      }
+
+      .info-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(43, 132, 234, 0.3);
+      }
+
+      /* Footer Styles */
+      footer {
+        background: var(--dark-gradient);
+        color: white;
+        padding: 60px 5% 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .footer-section h3 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        position: relative;
+      }
+
+      .footer-section h3::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background: var(--primary-gradient);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 15px;
+      }
+
+      .footer-links a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .footer-links a:hover {
+        color: white;
+        transform: translateX(5px);
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 30px;
+        margin-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes backgroundMove {
+        from {
+          background-position: 0 0;
+        }
+        to {
+          background-position: 100% 100%;
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.5em;
+        }
+        .hero p {
+          font-size: 1.3em;
+        }
+        .auth-buttons {
+          display: none;
+        }
+        .nav-bar {
+          flex-direction: column;
+          gap: 15px;
+        }
+        .brand-name {
+          font-size: 28px;
+        }
+        .specialties-section,
+        .patient-info-section {
+          padding: 40px 5%;
+        }
+        .section-header h2 {
+          font-size: 2em;
+        }
+        .specialty-card,
+        .info-card {
+          margin-bottom: 20px;
+        }
+      }
+
+      /* About Us Section */
+      .about-section {
+        padding: 5rem 0;
+        background: var(--light-bg);
+      }
+
+      .about-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .about-card {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        transition: transform 0.3s ease;
+      }
+
+      .about-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .about-card h3 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+      }
+
+      .about-card p {
+        color: var(--text-color);
+        margin-bottom: 1rem;
+      }
+
+      .about-stats {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      .stat-item {
+        padding: 1rem;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--secondary-color);
+      }
+
+      .stat-label {
+        color: var(--text-color);
+        font-size: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress">
+      <div class="scroll-progress-bar"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="top-bar">
+        <a href="/" class="brand">
+          <img th:src="@{/images/Onehealth.png}" alt="OneHealth Logo" />
+          <span class="brand-name">OneHealth</span>
+        </a>
+        <div class="auth-buttons">
+          <a th:href="@{/patients}" class="auth-btn patient-login">
+            <i class="fas fa-user"></i> Patient Login
+          </a>
+          <a th:href="@{/doctors}" class="auth-btn doctor-login">
+            <i class="fas fa-user-md"></i> Doctor Login
+          </a>
+          <a th:href="@{/receptionist}" class="auth-btn staff-login">
+            <i class="fas fa-user-tie"></i> Staff Login
+          </a>
+          <a th:href="@{/signup}" class="auth-btn signup-btn">
+            <i class="fas fa-user-plus"></i> Sign Up
+          </a>
+        </div>
+      </div>
+
+      <nav class="nav-bar">
+        <a href="tel:+1234567890" class="contact-info">
+          <i class="fas fa-phone"></i> +1 (234) 567-890
+        </a>
+        <div class="nav-links">
+          <a href="#about" class="nav-link">About Us</a>
+          <a href="#specialties" class="nav-link">Specialties</a>
+          <a href="#patient-info" class="nav-link">Patient Info</a>
+        </div>
+        <button class="emergency-btn">
+          <i class="fas fa-ambulance"></i> Emergency 24x7
+        </button>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1>Welcome to OneHealth</h1>
+          <p>Advanced Healthcare for a Better Tomorrow</p>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="features">
+        <div class="feature-card">
+          <i class="fas fa-user-md feature-icon"></i>
+          <h3>Expert Doctors</h3>
+          <p>
+            Access to highly qualified medical professionals with years of
+            experience.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-hospital feature-icon"></i>
+          <h3>Modern Facilities</h3>
+          <p>State-of-the-art medical equipment and comfortable environment.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-ambulance feature-icon"></i>
+          <h3>24/7 Emergency</h3>
+          <p>Round-the-clock emergency medical services for immediate care.</p>
+        </div>
+      </section>
+
+      <!-- Specialties Section -->
+      <section id="specialties" class="specialties-section">
+        <div class="section-header">
+          <h2>Our Specialties</h2>
+          <p>Comprehensive Healthcare Solutions</p>
+        </div>
+        <div class="specialties-grid">
+          <div class="specialty-card">
+            <div class="specialty-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h3>Cardiology</h3>
+            <ul>
+              <li>Heart Disease Treatment</li>
+              <li>Cardiac Surgery</li>
+              <li>Cardiovascular Care</li>
+              <li>ECG & Echo Services</li>
+            </ul>
+          </div>
+          <div class="specialty-card">
+            <div class="specialty-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3>Neurology</h3>
+            <ul>
+              <li>Brain & Spine Surgery</li>
+              <li>Stroke Treatment</li>
+              <li>Neurological Disorders</li>
+              <li>Cognitive Care</li>
+            </ul>
+          </div>
+          <div class="specialty-card">
+            <div class="specialty-icon">
+              <i class="fas fa-bone"></i>
+            </div>
+            <h3>Orthopedics</h3>
+            <ul>
+              <li>Joint Replacement</li>
+              <li>Sports Medicine</li>
+              <li>Spine Surgery</li>
+              <li>Fracture Care</li>
+            </ul>
+          </div>
+          <div class="specialty-card">
+            <div class="specialty-icon">
+              <i class="fas fa-child"></i>
+            </div>
+            <h3>Pediatrics</h3>
+            <ul>
+              <li>Child Healthcare</li>
+              <li>Vaccination</li>
+              <li>Growth Monitoring</li>
+              <li>Pediatric Surgery</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Patient Info Section -->
+      <section id="patient-info" class="patient-info-section">
+        <div class="section-header">
+          <h2>Patient Information</h2>
+          <p>Everything You Need to Know</p>
+        </div>
+        <div class="info-grid">
+          <div class="info-card">
+            <i class="fas fa-clock"></i>
+            <h3>Visiting Hours</h3>
+            <p>Morning: 9:00 AM - 12:00 PM</p>
+            <p>Evening: 4:00 PM - 8:00 PM</p>
+          </div>
+          <div class="info-card">
+            <i class="fas fa-procedures"></i>
+            <h3>Admission Process</h3>
+            <p>Simple 3-step admission</p>
+            <a href="#" class="info-btn">Learn More</a>
+          </div>
+          <div class="info-card">
+            <i class="fas fa-file-medical"></i>
+            <h3>Medical Records</h3>
+            <p>Access your health records online</p>
+            <a href="#" class="info-btn">Access Records</a>
+          </div>
+          <div class="info-card">
+            <i class="fas fa-credit-card"></i>
+            <h3>Payment Options</h3>
+            <p>Multiple payment methods available</p>
+            <a href="#" class="info-btn">View Options</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Us Section -->
+      <section class="about-section">
+        <div class="about-content">
+          <h2 class="text-center mb-4">About OneHealth</h2>
+          <p class="text-center mb-5">
+            We are committed to providing exceptional healthcare services with a
+            focus on patient well-being and medical excellence.
+          </p>
+
+          <div class="about-grid">
+            <div class="about-card">
+              <h3>Our Mission</h3>
+              <p>
+                To provide accessible, high-quality healthcare services to our
+                community while maintaining the highest standards of medical
+                care and patient satisfaction.
+              </p>
+            </div>
+
+            <div class="about-card">
+              <h3>Our Vision</h3>
+              <p>
+                To be the leading healthcare provider in the region, known for
+                our innovative treatments, compassionate care, and commitment to
+                medical excellence.
+              </p>
+            </div>
+
+            <div class="about-card">
+              <h3>Our Values</h3>
+              <p>
+                We uphold the values of integrity, compassion, excellence, and
+                innovation in every aspect of our healthcare services.
+              </p>
+            </div>
+          </div>
+
+          <div class="about-stats">
+            <div class="stat-item">
+              <div class="stat-number">500+</div>
+              <div class="stat-label">Patients Treated</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">50+</div>
+              <div class="stat-label">Expert Doctors</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">24/7</div>
+              <div class="stat-label">Emergency Care</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <ul class="footer-links">
+            <li><i class="fas fa-phone"></i> +1 (234) 567-890</li>
+            <li><i class="fas fa-envelope"></i> contact@onehealth.com</li>
+            <li><i class="fas fa-map-marker-alt"></i> 123 Healthcare Ave</li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#specialties">Our Specialties</a></li>
+            <li><a href="#patient-info">Patient Info</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Emergency</h3>
+          <ul class="footer-links">
+            <li>24/7 Emergency Services</li>
+            <li>Emergency Hotline: 911</li>
+            <li>Ambulance Services Available</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2024 OneHealth. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Scroll Progress
+      window.addEventListener("scroll", () => {
+        const scrollProgress = document.querySelector(".scroll-progress-bar");
+        const scrolled =
+          (window.scrollY /
+            (document.documentElement.scrollHeight - window.innerHeight)) *
+          100;
+        scrollProgress.style.width = `${scrolled}%`;
+      });
+
+      // Smooth scroll for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

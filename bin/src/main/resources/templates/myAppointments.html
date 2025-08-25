@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Your Appointments</title>
+    <style>
+      /* Body Styling */
+      body {
+        font-family: "Arial", sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+
+        background-image: url("https://thumbs.dreamstime.com/b/doctor-sitting-male-patient-s-bed-hospital-55900586.jpg");
+        background-size: cover;
+        background-position: top center;
+        background-attachment: fixed;
+        height: 100vh;
+        position: relative;
+      }
+
+      body::before {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 255, 0.3);
+        z-index: -1;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.5em;
+        color: #2d3e50;
+        margin-top: 30px;
+        text-transform: uppercase;
+        z-index: 1;
+      }
+
+      table {
+        width: 90%;
+        margin: 40px auto;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      caption {
+        font-size: 1.8em;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #2d3e50;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+        font-size: 1em;
+      }
+
+      th {
+        background-color: #ff9a3c;
+        color: white;
+        text-transform: uppercase;
+      }
+
+      td {
+        background-color: #f9f9f9;
+      }
+
+      tr:nth-child(even) td {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover td {
+        background-color: #f1f1f1;
+        cursor: pointer;
+      }
+
+      a {
+        color: #38598b;
+        text-decoration: none;
+        font-size: 1.1em;
+        margin: 20px;
+        display: inline-block;
+        font-weight: bold;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      hr {
+        border: 0;
+        border-top: 1px solid #ccc;
+        margin: 20px auto;
+        width: 80%;
+      }
+      .top-strip {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: white;
+        color: white;
+        padding: 10px 30px;
+      }
+
+      .top-strip img {
+        height: 100px;
+        width: 180px;
+        padding-left: 0px;
+      }
+      .top-strip {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        padding: 10px 30px;
+      }
+
+      .top-strip img {
+        height: 100px;
+        width: 180px;
+      }
+
+      .top-strip h1 {
+        font-size: 2em;
+        margin: 0;
+      }
+
+      .top-strip .home-link {
+        background-color: white;
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #38598b;
+        text-decoration: none;
+        margin-left: 20px;
+        display: inline-block;
+      }
+
+      .top-strip .home-link:hover {
+        text-decoration: underline;
+        color: #ff9a3c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-strip">
+      <img th:src="@{/images/Onehealth.png}" alt="OneHealth Logo" />
+
+      <a class="home-link" th:href="@{/patients}">Go back to Homepage</a>
+    </div>
+
+    <table>
+      <caption>
+        Upcoming Appointments
+      </caption>
+      <tr>
+        <th>Appointment ID</th>
+        <th>Patient Name</th>
+        <th>Doctor Name</th>
+        <th>Appointment Date</th>
+        <th>Confirmation</th>
+      </tr>
+      <tr th:each="appointment : ${listAppointments}">
+        <td th:text="${appointment.appointment_id}"></td>
+        <td th:text="${appointment.patientName}"></td>
+        <td th:text="${appointment.doctorName}"></td>
+        <td th:text="${appointment.date}"></td>
+        <td th:text="${appointment.confirmed}"></td>
+        <td>
+          <a
+            th:href="@{/patients/updateAppointment/{id}(id=${appointment.appointment_id})}"
+            >Edit</a
+          >
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
