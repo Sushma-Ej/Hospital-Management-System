@@ -1,29 +1,10 @@
-debug: true
-
-server:
-  port: 8083
-
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/hospital
-    username: root
-    password: sush
+  profiles:
+    active: dev
 
-  thymeleaf:
-    cache: false
-
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-        jdbc:
-          lob:
-            non-contextual-creation: true
-    hibernate:
-      ddl-auto: update
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, info
+# Common settings
+logging:
+  level:
+    root: INFO
+    org.springframework: WARN
+    org.hibernate: WARN
