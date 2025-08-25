@@ -1,9 +1,5 @@
 # Hospital Management System
 
-[![GitHub license](https://img.shields.io/github/license/Sushma-Ej/HospitalManagementSystem)](https://github.com/Sushma-Ej/HospitalManagementSystem/blob/main/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/Sushma-Ej/HospitalManagementSystem)](https://github.com/Sushma-Ej/HospitalManagementSystem/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/Sushma-Ej/HospitalManagementSystem)](https://github.com/Sushma-Ej/HospitalManagementSystem/issues)
-
 A comprehensive Hospital Management System built with Spring Boot and Thymeleaf that handles patient appointments, doctor consultations, and prescription management.
 
 ## Table of Contents
@@ -27,6 +23,23 @@ A comprehensive Hospital Management System built with Spring Boot and Thymeleaf 
 - **Prescription Management**: Doctors can create and update prescriptions
 - **Patient Records**: Maintain and view patient medical history
 - **Responsive Design**: Works on desktop and mobile devices
+
+## 📸 Screenshots
+
+### Login Page
+![Login Page](screenshots/login.png)
+
+### Dashboard
+![Dashboard](screenshots/patient-dashboard.png)
+![Dashboard](screenshots/doctor-dashboard.png)
+
+### Appointment Management
+![Appointment Management](screenshots/appointment.png)
+
+### Schedule Management
+![Schedule Management](screenshots/schedule.png)
+
+> **Security Note**: For security reasons, please ensure you properly log out after each session before switching between different user roles. The system enforces role-based access control, and you'll need to log out of your current session before accessing the application with different credentials.
 
 ## 🏗️ Architecture
 
