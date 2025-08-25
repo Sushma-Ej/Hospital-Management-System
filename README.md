@@ -30,8 +30,8 @@ A comprehensive Hospital Management System built with Spring Boot and Thymeleaf 
 ![Login Page](screenshots/login.png)
 
 ### Dashboard
-![Dashboard](screenshots/patient-dashboard.png)
-![Dashboard](screenshots/doctor-dashboard.png)
+![Dashboard](screenshots/patient_dashboard.png)
+![Dashboard](screenshots/doctor_dashboard.png)
 
 ### Appointment Management
 ![Appointment Management](screenshots/appointment.png)
